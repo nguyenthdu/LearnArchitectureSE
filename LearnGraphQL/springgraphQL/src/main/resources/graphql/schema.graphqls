@@ -1,0 +1,48 @@
+type Query {
+    getAllAuthors: [Author]
+    getAuthorById(id: ID): Author
+    getAllBooks: [Book]
+    getBookById(id: ID): Book
+    searchBooks(
+        name: String,
+        authorFirstName: String,
+        authorLastName: String,
+        minPageCount: Int,
+        maxPageCount: Int
+    ): [Book]
+}
+
+type Mutation {
+    createAuthor(firstName: String, lastName: String): Author
+    updateAuthor(id: ID, firstName: String, lastName: String): ResponseMessage
+    deleteAuthor(id: ID): ResponseMessage
+    createBook(name: String, pageCount: Int, authorId: ID): Book
+    updateBook(id: ID, name: String, pageCount: Int, authorId: ID): Book
+    deleteBook(id: ID): Boolean
+    updateBooksPageCount(booksPageCountInput: [BookPageCountInput]): [Book]
+}
+
+type Author {
+    id: ID
+    firstName: String
+    lastName: String
+    books: [Book]
+}
+
+type Book {
+    id: ID
+    name: String
+    pageCount: Int
+    author: Author
+}
+type ResponseMessage{
+    message: String
+    status: String
+    timestamp: String
+}
+
+
+input BookPageCountInput {
+    id: ID
+    pageCount: Int
+}
